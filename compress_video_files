@@ -16,6 +16,12 @@ if [ -z $TRG_DIR ];then
     exit 1
 fi
 
+_clean_exit() {
+    FILE_TO_CLEAN=$1
+    rm -f $FILE_TO_CLEAN
+    exit 2
+}
+
 compress_video_file() {
     INPUT_FILE=$1
     if [ -z $INPUT_FILE ];then
@@ -26,7 +32,7 @@ compress_video_file() {
     OUTPUT_FILE=$TRG_DIR/$(basename $INPUT_FILE | sed "s/\.[a-zA-Z0-9]\+$/${CRF_SUFFIX}.mp4/g")
 
     echo "Compressing file: $INPUT_FILE"
-    ffmpeg -loglevel error -i $INPUT_FILE -vcodec libx265 -crf $CRF_LEVEL -preset faster $OUTPUT_FILE -hide_banner || rm -f $OUTPUT_FILE; exit 2
+    ffmpeg -loglevel error -i $INPUT_FILE -vcodec libx265 -crf $CRF_LEVEL -preset faster $OUTPUT_FILE -hide_banner || _clean_exit $OUTPUT_FILE
     echo "Successfully compressed to $OUTPUT_FILE"
     echo 
 }

@@ -45,7 +45,7 @@ list_unsynced_compressed_files() {
     # where one contains regular video files and the other one compressed version of those.
     # Any missing files in the second one should get listed.
 
-    diff <(ls $SRC_DIR/*$VID_FILE_TYPE) <(ls $TRG_DIR | sed "s/$CRF_SUFFIX//g") \
+    diff <(ls $SRC_DIR | grep -E ".$VID_FILE_TYPE$" ) <(ls $TRG_DIR | sed "s/$CRF_SUFFIX//g") \
         | grep -E "^< " \
         | cut -d" " -f2 \
         | sed "s+^+$SRC_DIR/+g"

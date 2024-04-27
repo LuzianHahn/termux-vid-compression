@@ -26,7 +26,7 @@ compress_video_file() {
     OUTPUT_FILE=$TRG_DIR/$(basename $INPUT_FILE | sed "s/\.[a-zA-Z0-9]\+$/${CRF_SUFFIX}.mp4/g")
 
     echo "Compressing file: $INPUT_FILE"
-    ffmpeg -loglevel error -i $INPUT_FILE -vcodec libx265 -crf $CRF_LEVEL -preset faster $OUTPUT_FILE -hide_banner || exit 2
+    ffmpeg -loglevel error -i $INPUT_FILE -vcodec libx265 -crf $CRF_LEVEL -preset faster $OUTPUT_FILE -hide_banner || rm -f $OUTPUT_FILE; exit 2
     echo "Successfully compressed to $OUTPUT_FILE"
     echo 
 }

@@ -1,0 +1,59 @@
+#!/bin/bash
+
+CRF_LEVEL=30
+SRC_DIR=$1
+TRG_DIR=$2
+CRF_SUFFIX=_crf$CRF_LEVEL # ffmpeg CRF-Level
+
+if [ -z $SRC_DIR ];then
+    echo "Error: No Input Directory provided..."
+    exit 1
+fi
+
+if [ -z $TRG_DIR ];then
+    echo "Error: No Target Directory provided..."
+    exit 1
+fi
+
+compress_video_file() {
+    INPUT_FILE=$1
+    if [ -z $INPUT_FILE ];then
+        echo "Error: No Input File provided..."
+        exit 1
+    fi
+
+    OUTPUT_FILE=$TRG_DIR/$(basename $INPUT_FILE | sed "s/\.[a-zA-Z0-9]\+$/${CRF_SUFFIX}.mp4/g")
+
+    echo "Compressing file: $INPUT_FILE"
+    ffmpeg -loglevel error -i $INPUT_FILE -vcodec libx265 -crf $CRF_LEVEL -preset faster $OUTPUT_FILE -hide_banner &> /dev/null
+    # -loglevel error does not seem to work, so using pipe to /dev/null instead
+    echo "Successfully compressed to $OUTPUT_FILE"
+    echo 
+}
+
+
+prune_broken_compressed_files() {
+    for f in $TRG_DIR/*;do
+        ffmpeg -v error -i $f -map 0:1 -f null - 2> /dev/null || \
+            (echo "Found broken file: $f. Removing it."; rm $f)
+    done    
+}
+
+list_unsynced_compressed_files() {
+    # This function is supposed to find mismatches between two directories,
+    # where one contains regular video files and the other one compressed version of those.
+    # Any missing files in the second one should get listed.
+
+    diff <(ls $SRC_DIR) <(ls $TRG_DIR | sed "s/$CRF_SUFFIX//g") \
+        | grep -E "^< " \
+        | cut -d" " -f2 \
+        | sed "s+^+$SRC_DIR/+g"
+        # Apparently "/" is not necessary for sed, according to this source:
+        # https://stackoverflow.com/questions/12061410/how-to-replace-a-path-with-another-path-in-sed
+}
+
+
+prune_broken_compressed_files
+for uncompressed_vid_file in $(list_unsynced_compressed_files);do
+    compress_video_file $uncompressed_vid_file
+done

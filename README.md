@@ -22,3 +22,11 @@ I'd rather have them in a compressed version available. This also makes streamin
 * use different compression approaches to even further compress videos
 * add compression for images
 
+## Development
+
+The test are done via python, although the utilities don't use it.
+In order to run the tests, you need to install `pytest` and run
+```bash
+pytest
+```
+

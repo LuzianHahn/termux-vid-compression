@@ -5,15 +5,20 @@ Currently my phone records videos in a very high quality resulting into very lar
 I'd rather have them in a compressed version available. This also makes streaming from the cloud more easy.
 
 ## Potential solution
-* get script for compression running on phone via termux
-* use two folders, one for storing the original videos, second for storing the compressed versions
-* point owncloud auto sync to the second one
-* use cronjobs on the phone to do this regularly
-* consider clean up on the phone. Currently not necessary, since I have a lot of storage. I can also buy a large micro SD card to hold them instead.
-> could be problematic to use external SD card storage, since termux cannot access it.
+- [x] get script for compression running on phone via termux
+- [x] use two folders, one for storing the original videos, second for storing the compressed versions
+- [ ] point owncloud auto sync to the second one
+> Apparently the owncloud client somehow reacts on
+- [ ] use `cadaver` to sync with webdav owncloud
+> is an interactive tool. It is possible to send stuff here, but an efficient sync is not possible, like it would be done with `rsync`
+- [ ] fork EasySync Fdroid app. It uses static folder paths to sync. Might be easy to change and use an own fork of it.
+- [ ] use cronjobs on the phone to do this regularly
 
 ## Ideas 
-> * Use the share function to call termux and with it an entrypoint doing the compression. Need to see if there is some functionality provided by termux for that.
->
-> Not working, since termux does not offer such a thing as it seems
-* Remove intermediate compressed files if `ffmpeg` is aborted. Detection of broken mp4 files does not always work, since partially encoded videos apparently count as error free encodings
+* use `find` instead of for loop, in case of no content raising in error (`$SRC_DIR/*` is then interpreted as file)
+* consider clean up on the phone. Currently not necessary, since I have a lot of storage. I can also buy a large micro SD card to hold them instead. However since termux cannot access the SD-Card, this would require a more complicated solution
+
+
+## Issues:
+* cadaver's `ls` splits its overview with spaces but does not escape spaces in files listed.
+  This might require a more complex parsing of the received table structure.

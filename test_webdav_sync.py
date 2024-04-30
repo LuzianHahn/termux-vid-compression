@@ -6,7 +6,7 @@ import subprocess as sb
 
 def call_subprocess(cmd: str) -> str:
     process = sb.Popen(
-        f". sync_local_dir_w_remote;{cmd}",
+        f". lib/webdav_sync;{cmd}",
         shell=True, executable="/bin/bash", stdout=sb.PIPE, stderr=sb.STDOUT
     )
     output, err = process.communicate(timeout=10)

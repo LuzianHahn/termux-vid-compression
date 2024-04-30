@@ -46,10 +46,13 @@ def test_simple_synced_upload(tmpdir, remote_test_dir):
     
 
 def test_no_upload_if_target_dir_is_missing(tmpdir):
+    remote_test_dir = "invalid_remote_target_dir"
     dummy_content = Path(tmpdir) / "dummy_content"
     dummy_content.mkdir()
     dummy_file = dummy_content / "a"
     dummy_file.touch()
+    with pytest.raises(AssertionError):
+        call_subprocess(f"sync_local_w_remote {dummy_content} {remote_test_dir}")
 
 
 

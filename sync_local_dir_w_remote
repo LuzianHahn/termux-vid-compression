@@ -21,6 +21,14 @@ EOF
 }
 
 
+function check_if_remote_dir_exists() {
+    local dir_path=$1
+    if _cadaver_call "ls $dir_path" | grep "404 Not Found";then
+        echo "Remote Directory \"$dir_path\" does not exist."
+        return 1
+    fi
+}
+
 function list_remote_files() {
     local dir_path=$1
     _cadaver_call "ls $dir_path" \
@@ -50,24 +58,18 @@ function list_unsynced_local_files() {
 
 }
 
-function send_files_to_remote() {
-    _cadaver_call "mput $@"
-
-}
-
 sync_local_w_remote() {
     local local_dir_path=$1
     local remote_dir_path=${2:-$local_dir_path}
+    check_if_remote_dir_exists $remote_dir_path || return 1
     files_to_sync=$(echo -n $(
         list_unsynced_local_files $local_dir_path $remote_dir_path \
             | sed -e "s/\(.*\)/'\1'/g" 
     ))
-    (
-        cd $local_dir_path
-        cmd="cd $remote_dir_path
-             mput $files_to_sync"
-        _cadaver_call "$cmd"
-    )
+    cmd="lcd $local_dir_path
+         cd $remote_dir_path
+         mput $files_to_sync"
+    _cadaver_call "$cmd"
 }
 
 

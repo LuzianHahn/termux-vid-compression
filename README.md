@@ -10,6 +10,14 @@ I'd rather have them in a compressed version available. This also makes streamin
   Only files with changes file sizes are transmitted. 
   No nested transmission.
 
+## Installation
+* ```bash
+  mkdir -p $HOME/.local/lib 
+  git clone https://github.com/LuzianHahn/termux-vid-compression.git $HOME/.local/lib/termux-vid-compression
+  bash $HOME/.local/lib/termux-vid-compression/installer.sh
+  ```
+* You need the following packages: `cadaver`, `ffmpeg`
+
 ## Potential solution
 - [x] get script for compression running on phone via termux
 - [x] use two folders, one for storing the original videos, second for storing the compressed versions

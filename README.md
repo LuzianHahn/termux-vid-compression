@@ -17,6 +17,17 @@ I'd rather have them in a compressed version available. This also makes streamin
   bash $HOME/.local/lib/termux-vid-compression/installer.sh
   ```
 * You need the following packages: `cadaver`, `ffmpeg`
+* In order to use the shortcuts, configure a local `.env` file in this repository with:
+  ```bash
+  $VIDEO_SRC        # used as source directory for large videos, you want to compress
+  $VIDEO_TRG        # used as target directory to store the compressed videos from $VIDEO_SRC
+  $VIDEO_LOCAL_SRC  # used as local source directory to sync videos from
+  $VIDEO_REMOTE_TRG # used as remote target directory on a webdav server to sync your videos to
+  $WEBDAV_URL       # url for your webdav service, to which the videos are synced to 
+  ```
+  > Regarding infos on shortcuts, checkout https://github.com/termux/termux-widget
+* Configure a `$HOME/.netrc` file to authenticate yourself against your webdav service.
+  See also https://man.archlinux.org/man/cadaver.1.en#THE_.netrc_FILE
 
 ## Potential solution
 - [x] get script for compression running on phone via termux

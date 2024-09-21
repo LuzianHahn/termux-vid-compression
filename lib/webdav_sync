@@ -6,16 +6,15 @@
 # This sync works unidirectional from local to remote.
 
 DELIMITER="\t"
-. .env
 
-if [ -z $OWNCLOUD_URL ];then
-    echo "No owncloud url set. Did you configure a proper .env file?"
+if [ -z $WEBDAV_URL ];then
+    echo "No webdav url set. Did you configure a proper .env file?"
     exit 1
 fi
 
 function _cadaver_call() {
     local func=$1
-    cat <<EOF | cadaver $OWNCLOUD_URL
+    cat <<EOF | cadaver $WEBDAV_URL
 ${func}
 EOF
 }

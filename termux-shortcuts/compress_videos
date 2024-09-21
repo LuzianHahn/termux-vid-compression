@@ -1,0 +1,18 @@
+#!/bin/bash
+
+CFG_ENV_FILE=~/.local/lib/termux-vid-compression/.env
+
+if [ ! -f $CFG_ENV_FILE ];then
+    echo "Missing .env file in termux-vid-compression library."
+    echo "It must contain source and target path for videos to get compressed!"
+    echo "For this, specify the ENV Variables \"VIDEO_SRC\" and \"VIDEO_TRG\"!"
+    exit 1
+fi
+
+. $CFG_ENV_FILE
+
+set -u
+
+# for some reason, I cannot use compress_video_files from my $PATH, even after sourcing .bashrc...
+# therefore I am executing the script by its full path
+bash ~/.local/bin/compress_video_files $VIDEO_SRC $VIDEO_TRG

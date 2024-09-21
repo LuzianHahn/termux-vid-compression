@@ -34,6 +34,7 @@ I'd rather have them in a compressed version available. This also makes streamin
 - [x] use two folders, one for storing the original videos, second for storing the compressed versions
 - [x] use `cadaver` to sync with webdav owncloud
 - [ ] use cronjobs on the phone to do this regularly
+- [ ] refactor this using rust, to practice it and avoid complex bash scripts. Also allows for better testing
 
 ## Ideas 
 * use `find` instead of for loop, in case of no content raising in error (`$SRC_DIR/*` is then interpreted as file)

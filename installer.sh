@@ -14,3 +14,12 @@ if [ -d $HOME/.shortcuts ];then
     cp $ABS_SRC_DIR/termux-shortcuts/* $HOME/.shortcuts/
     echo "Successfully added termux shortcuts."
 fi
+
+if [ ! -f $HOME/bin/termux-file-editor ];then
+    echo "Did not find any existing termux-file-editor. Registering WebDav-Sync-Hook then..."
+    mkdir -p $HOME/bin
+    ln -fs $ABS_SRC_DIR/termux-file-editor/termux-file-editor $HOME/bin
+    echo "Successfully registered WebDav-Sync-Hook as termux-file-editor."
+else
+    echo "Found existing termux-file-editor. Too afraid to overwrite. Do so manually..."
+fi

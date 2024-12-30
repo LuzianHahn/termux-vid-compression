@@ -9,6 +9,9 @@ I'd rather have them in a compressed version available. This also makes streamin
 * webdav sync to transfer all files in own folder into a webdav location.
   Only files with changes file sizes are transmitted. 
   No nested transmission.
+* webdav-sync-hook, which allows for termux to accept shared files and transfer them to your configured `$WEBDAV_URL`-server.
+  The hook will let you first rename your file and then browse via `cadaver` to your target location of choice.
+  Afterwards run `put <my-renamed-file>` to transfer it.
 
 ## Installation
 * ```bash

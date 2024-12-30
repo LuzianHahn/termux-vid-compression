@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+echo $1
+cd $HOME/.local/lib/termux-vid-compression
+mv $1 ./
+. .env
+cadaver $WEBDAV_URL
+rm $(basename $1)

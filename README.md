@@ -32,6 +32,15 @@ I'd rather have them in a compressed version available. This also makes streamin
 * Configure a `$HOME/.netrc` file to authenticate yourself against your webdav service.
   See also https://man.archlinux.org/man/cadaver.1.en#THE_.netrc_FILE
 
+
+### Backup-Cronjob
+* calling `bash installer.sh` already sets up a cronjob for this. However, it is necessary to configure a `.env.bakbak`-file in the root of this repo, which contains:
+  ```bash
+  $LOCAL_SRC  # used as local source directory to sync backups from
+  $REMOTE_TRG # used as remote target directory on a webdav server to sync your backups to
+  $WEBDAV_URL       # url for your webdav service, to which the backups are synced to 
+  ```
+
 ## Potential solution
 - [x] get script for compression running on phone via termux
 - [x] use two folders, one for storing the original videos, second for storing the compressed versions
